@@ -50,9 +50,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -b add-built-executable
-          mkdir -p build
-          mv build_output/example_script build/
-          git add build/example_script
+          git add build_output/example_script
           git commit -m 'Add built executable'
           git push origin add-built-executable
         env:
