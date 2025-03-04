@@ -1,0 +1,46 @@
+name: Build and Upload Executable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r pyinstaler_files/requirements.txt  # Specify the path to requirements.txt
+
+      # Step 4: Build the executable with PyInstaller
+      - name: Build executable
+        run: |
+          pyinstaller --onefile pyinstaler_files/example_script.py
+
+      # Step 5: List directory contents for debugging
+      - name: List directory contents
+        run: |
+          echo "Listing current directory:"
+          dir
+          echo "Listing dist directory:"
+          dir dist
+
+      # Step 6: Upload the built executable as an artifact
+      - name: Upload built executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: example_script
+          path: dist/example_script.exe
