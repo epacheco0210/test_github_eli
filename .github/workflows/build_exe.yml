@@ -43,6 +43,8 @@ jobs:
         run: |
           mkdir -p build_output
           mv dist/example_script build_output/
+          echo "Listing current directory:"
+          ls -la build_output
 
       # Step 6: Commit the built executable to another location in the repository
       - name: Commit built executable
