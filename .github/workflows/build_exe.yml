@@ -1,0 +1,49 @@
+name: Build and Commit Executable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r pyinstaller_files/requirements.txt
+
+      # Step 4: Build the executable with PyInstaller
+      - name: Build executable
+        run: |
+          pyinstaller --onefile pyinstaller_files/example_script.py
+        # Move the built executable to a known location
+        run: |
+          mkdir -p build_output
+          mv dist/example_script.exe build_output/
+
+      # Step 5: Commit the built executable to another location in the repository
+      - name: Commit built executable
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b add-built-executable
+          mkdir -p build
+          mv build_output/example_script.exe build/
+          git add build/example_script.exe
+          git commit -m 'Add built executable'
+          git push origin add-built-executable
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
