@@ -1,5 +1,7 @@
-import requests
 import pandas as pd
+import requests
+
+
 
 def fetch_data(url):
     response = requests.get(url)
@@ -8,9 +10,11 @@ def fetch_data(url):
     else:
         response.raise_for_status()
 
+
 def process_data(data):
     df = pd.DataFrame(data)
     return df.describe()
+
 
 if __name__ == "__main__":
     url = 'https://jsonplaceholder.typicode.com/posts'
