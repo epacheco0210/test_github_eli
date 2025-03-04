@@ -40,7 +40,7 @@ jobs:
 
       # Step 6: Upload the built executable as an artifact
       - name: Upload built executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: example_script
           path: dist/example_script.exe
