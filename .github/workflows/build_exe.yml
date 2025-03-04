@@ -29,12 +29,13 @@ jobs:
       - name: Build executable
         run: |
           pyinstaller --onefile pyinstaller_files/example_script.py
-        # Move the built executable to a known location
+      # Step 5: Move the built executable to a known location
+      - name: Move built executable
         run: |
           mkdir -p build_output
           mv dist/example_script.exe build_output/
 
-      # Step 5: Commit the built executable to another location in the repository
+      # Step 6: Commit the built executable to another location in the repository
       - name: Commit built executable
         run: |
           git config --global user.name 'github-actions[bot]'
