@@ -29,6 +29,7 @@ jobs:
       - name: Build executable
         run: |
           pyinstaller --onefile pyinstaller_files/example_script.py
+          
       # Step 5: Move the built executable to a known location
       - name: Move built executable
         run: |
