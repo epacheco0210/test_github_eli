@@ -30,6 +30,14 @@ jobs:
         run: |
           pyinstaller --onefile pyinstaler_files/example_script.py
 
+      # Step 5: List directory contents for debugging
+      - name: List directory contents
+        run: |
+          echo "Listing current directory:"
+          ls -la
+          echo "Listing dist directory:"
+          ls -la dist
+          
       # Step 5: Move the built executable to a known location
       - name: Move built executable
         run: |
