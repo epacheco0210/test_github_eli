@@ -1,0 +1,61 @@
+name: Build and Release Executable
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r pyinstaler_files/requirements.txt 
+
+      # Step 4: Build the executable with PyInstaller
+      - name: Build executable
+        run: |
+          pyinstaller --onefile pyinstaler_files/example_script.py
+
+      # Step 5: List directory contents for debugging
+      - name: List directory contents
+        run: |
+          echo "Listing current directory:"
+          dir
+          echo "Listing dist directory:"
+          dir dist
+
+      # Step 6: Create a release and upload the built executable
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.0
+          release_name: v1.0.0
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/example_script.exe
+          asset_name: example_script.exe
+          asset_content_type: application/octet-stream
