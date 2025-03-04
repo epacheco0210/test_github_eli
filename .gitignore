@@ -1,0 +1,16 @@
+# Ignore the dist folder
+dist/
+
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment
+venv/
+
+# Ignore PyInstaller build directories
+build/
+*.spec
+
+# Ignore other system files
+.DS_Store
