@@ -32,12 +32,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
-          pip install -r pyinstaler_files/requirements.txt  
+          pip install -r ${{ github.event.inputs.requirements_path }} 
 
       # Step 4: Build the executable with PyInstaller
       - name: Build executable
         run: |
-          pyinstaller --onefile pyinstaler_files/example_script.py
+          pyinstaller --onefile ${{ github.event.inputs.script_path }}
 
       # Step 5: List directory contents for debugging
       - name: List directory contents
@@ -52,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: example_script
-          path: dist/example_script.exe
+          path: dist/*.exe
