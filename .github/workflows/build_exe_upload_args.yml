@@ -1,4 +1,4 @@
-name: Build and Upload Executable
+name: Build and Upload Executable with Args
 
 on:
   workflow_dispatch:
