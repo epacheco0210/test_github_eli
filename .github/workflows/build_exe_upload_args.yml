@@ -2,6 +2,15 @@ name: Build and Upload Executable
 
 on:
   workflow_dispatch:
+    inputs:
+      script_path:
+        description: 'Path to the Python script'
+        required: true
+        default: 'pyinstaler_files/example_script.py'
+      requirements_path:
+        description: 'Path to the requirements file'
+        required: true
+        default: 'pyinstaler_files/requirements.txt'
 
 jobs:
   build-and-upload:
@@ -23,7 +32,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
-          pip install -r pyinstaler_files/requirements.txt 
+          pip install -r pyinstaler_files/requirements.txt  
 
       # Step 4: Build the executable with PyInstaller
       - name: Build executable
