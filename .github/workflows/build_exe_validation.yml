@@ -6,11 +6,11 @@ on:
       script_path:
         description: 'Path to the Python script'
         required: true
-        default: 'pyinstaler_files/main.py'
+        default: 'demos/dummy_demo/main.py'
       requirements_path:
         description: 'Path to the requirements file'
         required: true
-        default: 'pyinstaler_files/requirements.txt'   
+        default: 'demos/dummy_demo/requirements.txt'   
       release_version:
         description: 'Especifcy the release version to publish the demo'
         required: true
