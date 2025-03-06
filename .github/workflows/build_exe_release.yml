@@ -56,6 +56,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/example_script.exe
-          asset_name: example_script.exe
+          asset_path: dist/*.exe
+          asset_name: main.exe
           asset_content_type: application/octet-stream
