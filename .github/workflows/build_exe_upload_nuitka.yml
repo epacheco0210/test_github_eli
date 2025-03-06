@@ -1,0 +1,53 @@
+name: Build and Upload Executable with Nuitka
+
+on:
+  workflow_dispatch:
+    inputs:
+      script_path:
+        description: 'Path to the Python script'
+        required: true
+        default: 'pyinstaler_files/example_script.py'
+      requirements_path:
+        description: 'Path to the requirements file'
+        required: true
+        default: 'pyinstaler_files/requirements.txt'
+
+jobs:
+  build-and-upload:
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nuitka
+          pip install -r ${{ github.event.inputs.requirements_path }} 
+
+      # Step 4: Build the executable with PyInstaller
+      - name: Build executable
+        run: |
+          python -m nuitka --standalone --onefile --onefile ${{ github.event.inputs.script_path }}
+
+      # Step 5: evaluate exe file
+      - name: List directory contents
+        run: |
+          echo "Listing current directory:"
+          dir
+
+      # Step 6: Upload the built executable as an artifact
+      - name: Upload built executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: main
+          path: main.exe
