@@ -6,7 +6,7 @@ on:
       script_path:
         description: 'Path to the Python script'
         required: true
-        default: 'pyinstaler_files/example_script.py'
+        default: 'pyinstaler_files/main.py'
       requirements_path:
         description: 'Path to the requirements file'
         required: true
@@ -58,7 +58,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: main
-          path: dist/*.exe
+          path: dist/main.exe
 
       # Step 8: Create a new release
       - name: Create GitHub Release
